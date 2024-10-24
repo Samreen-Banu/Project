@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #b3ecff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #fff; 
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+input[type="text"], input[type="email"], input[type="password"], select {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #ffccff; 
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #ff99cc; 
+}
+
+a {
+    color: #ff6699; 
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h2, h3 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #66b3ff; 
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2; 
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form method="POST" action="/register">
+            <input type="text" name="user_id" placeholder="User ID" required>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <select name="course" required>
+                <option value="">Select Course</option>
+                <option value="Python">Python</option>
+                <option value="Java">Java</option>
+                <option value="PHP">PHP</option>
+                <option value="ReactJS">ReactJS</option>
+            </select>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="/login">Login here</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome, {{ current_user['username'] }}</h2>
+        <p><strong>User ID:</strong> {{ current_user['user_id'] }}</p>
+        <p><strong>Email:</strong> {{ current_user['email'] }}</p>
+        <p><strong>Course:</strong> {{ current_user['course'] }}</p>
+
+        <h3>Other Registered Users</h3>
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Course</th>
+            </tr>
+            {% if other_users %}
+                {% for user in other_users %}
+                <tr>
+                    <td>{{ user['username'] }}</td>
+                    <td>{{ user['course'] }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="2">No other users found.</td>
+                </tr>
+            {% endif %}
+        </table>
+
+        <br>
+        <a href="/logout">Logout</a>
+    </div>
+</body>
+</html>
