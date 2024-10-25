@@ -3,20 +3,16 @@ import sqlite3
 import re
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'  # Needed for session management
+app.secret_key = 'supersecretkey'  
 
-# Database connection function
 def get_db_connection():
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
 
-# Create table if it doesn't exist
 def init_db():
     conn = get_db_connection()
-    # Drop the table if it already exists
     conn.execute('DROP TABLE IF EXISTS users')
-    # Create a new table with the required columns
     conn.execute('''CREATE TABLE IF NOT EXISTS users
                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
                      user_id TEXT NOT NULL UNIQUE,
@@ -26,8 +22,6 @@ def init_db():
                      password TEXT NOT NULL)''')
     conn.commit()
     conn.close()
-
-# Initialize the database
 init_db()
 
 @app.route('/')
@@ -42,18 +36,15 @@ def register():
     course = request.form['course']
     password = request.form['password']
 
-    # Email validation
     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
         return "Invalid email address"
 
-    # Check if email is already registered
     conn = get_db_connection()
     user = conn.execute('SELECT * FROM users WHERE email = ?', (email,)).fetchone()
     if user:
         conn.close()
         return "Email already registered."
 
-    # Insert the new user
     conn.execute('INSERT INTO users (user_id, username, email, course, password) VALUES (?, ?, ?, ?, ?)',
                  (user_id, username, email, course, password))
     conn.commit()
@@ -66,12 +57,9 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-
-        # Check if the user exists in the database
         conn = get_db_connection()
         user = conn.execute('SELECT * FROM users WHERE email = ? AND password = ?', (email, password)).fetchone()
         conn.close()
-
         if user:
             # Store user info in the session
             session['user_id'] = user['user_id']
@@ -90,7 +78,6 @@ def dashboard():
     if 'email' not in session:
         return redirect('/login')
 
-    # Fetch details of the currently logged-in user
     current_user = {
         'user_id': session['user_id'],
         'username': session['username'],
@@ -98,17 +85,14 @@ def dashboard():
         'course': session['course']
     }
 
-    # Fetch details of other registered users (excluding the current user)
     conn = get_db_connection()
     other_users = conn.execute('SELECT username, course FROM users WHERE email != ?', (session['email'],)).fetchall()
     conn.close()
 
-    # Render the dashboard with both the current user's info and the other users' list
     return render_template('dashboard.html', current_user=current_user, other_users=other_users)
 
 @app.route('/logout')
 def logout():
-    # Clear the session
     session.clear()
     return redirect('/login')
 
